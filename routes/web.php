@@ -5,6 +5,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,15 +14,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->group(function () {
     // User routes
     Route::get('/profile', [UserController::class, 'show'])->name('profile.show');
     Route::put('/profile', [UserController::class, 'update'])->name('profile.update');
     Route::put('/profile/password', [UserController::class, 'changePassword'])->name('profile.changePassword');
-    // Route::post('/cart/add', [UserController::class, 'addToCart'])->name('cart.add');
-    // Route::post('/purchase', [UserController::class, 'purchase'])->name('purchase');
+
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
