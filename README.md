@@ -56,7 +56,6 @@ npm install
 
 #### 4. Set up the environment file
 Copy the .env.example to .env:
-```
 
 ```bash
 cp .env.example .env
