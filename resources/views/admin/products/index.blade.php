@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Products</h1>
-    <a href="{{ route('products.create') }}" class="btn btn-primary">Create Product</a>
+    <a href="{{ route('admin.products.create') }}" class="btn btn-primary">Create Product</a>
 
     @if($products->count() === 0) 
         <div class="alert alert-warning mt-3">
@@ -26,8 +26,8 @@
                         <td>{{ $product->price }}</td>
                         <td>{{ $product->description }}</td>
                         <td>
-                            <a href="{{ route('products.edit', $product) }}" class="btn btn-sm btn-warning">Edit</a>
-                            <form action="{{ route('products.destroy', $product) }}" method="POST" style="display:inline;">
+                            <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-sm btn-warning">Edit</a>
+                            <form action="{{ route('admin.products.destroy', $product) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-sm btn-danger">Delete</button>

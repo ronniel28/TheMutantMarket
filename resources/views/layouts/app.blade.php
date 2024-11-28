@@ -74,7 +74,7 @@
 
                                     @if (auth()->check() && auth()->user()->hasRole('admin'))
                                         <a class="dropdown-item" href="{{ route('products.index') }}">Manage Products</a>
-                                        <a class="dropdown-item" href="{{ route('users.index') }}">Manage Users</a>
+                                        <a class="dropdown-item" href="{{ route('admin.users.index') }}">Manage Users</a>
                                     @endif
 
                                  

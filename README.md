@@ -179,3 +179,47 @@ Admin users can access the following sections:
 - **Promote Users**: Promote regular users to admins.
 
 Admin functionalities are protected using the `role:admin` middleware, ensuring that only users with the admin role can access them.
+
+#### Configure the User Model
+Ensure your User model uses the HasRoles trait provided by Spatie:
+
+```php
+use Spatie\Permission\Traits\HasRoles;
+
+class User extends Authenticatable
+{
+    use HasRoles;
+}
+
+```
+
+#### Add Roles to the Application
+
+Use a database seeder to define the roles (admin and user). Create a seeder:
+
+```bash
+php artisan make:seeder RoleSeeder
+
+```
+
+Update the RoleSeeder file:
+
+```php
+use Spatie\Permission\Models\Role;
+
+class RoleSeeder extends Seeder
+{
+    public function run()
+    {
+        Role::create(['name' => 'admin']);
+        Role::create(['name' => 'user']);
+    }
+}
+
+```
+
+Run the seeder:
+
+```bash
+php artisan db:seed --class=RoleSeeder
+```

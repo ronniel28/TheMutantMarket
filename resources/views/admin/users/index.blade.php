@@ -30,9 +30,9 @@
                             @endforeach
                         </td>
                         <td>
-                            <a href="{{ route('users.edit', $user) }}" class="btn btn-warning">Edit</a>
+                            <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-warning">Edit</a>
 
-                            <form action="{{ route('users.destroy', $user) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('admin.users.destroy', $user) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Delete</button>
@@ -40,7 +40,7 @@
 
                             <!-- Promote to Admin -->
                             @if(! $user->hasRole('admin'))
-                                <form action="{{ route('users.promote', $user) }}" method="POST" style="display:inline;">
+                                <form action="{{ route('admin.users.promote', $user) }}" method="POST" style="display:inline;">
                                     @csrf
                                     <button type="submit" class="btn btn-primary">Promote to Admin</button>
                                 </form>

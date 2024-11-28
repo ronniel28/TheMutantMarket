@@ -14,31 +14,43 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->group(function () {
     // User routes
-    Route::get('/profile', [UserController::class, 'show'])->name('profile.show');
-    Route::put('/profile', [UserController::class, 'update'])->name('profile.update');
-    Route::put('/profile/password', [UserController::class, 'changePassword'])->name('profile.changePassword');
+    Route::prefix('profile')->name('profile.')->group(function () {
+        Route::get('/', [UserController::class, 'show'])->name('show');
+        Route::put('/', [UserController::class, 'update'])->name('update');
+        Route::put('/password', [UserController::class, 'changePassword'])->name('changePassword');
+    });
 
-    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-    Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
-    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::prefix('cart')->name('cart.')->group(function () {
+        Route::get('/', [CartController::class, 'index'])->name('index');
+        Route::post('/add/{product}', [CartController::class, 'add'])->name('add');
+    });
 
-    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+    Route::prefix('orders')->name('orders.')->group(function () {
+        Route::post('/', [OrderController::class, 'store'])->name('store');
+        Route::get('/{order}', [OrderController::class, 'show'])->name('show');
+    });
+
+    Route::prefix('checkout')->name('checkout.')->group(function () {
+        Route::get('/', [CheckoutController::class, 'index'])->name('index');
+        Route::post('/', [CheckoutController::class, 'store'])->name('store');
+    });
 
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
     // Admin routes
-    Route::middleware(['role:admin'])->group(function () {
+    Route::middleware(['role:admin'])->prefix('admin')->name('admin.')->group(function () {
         Route::resource('products', ProductController::class)->except(['index']);
-        Route::get('/users', [UserController::class, 'index'])->name('users.index');
-        Route::get('/users/{user}', [UserController::class, 'edit'])->name('users.edit');
-        Route::put('/users/{user}', [UserController::class, 'updateUser'])->name('users.updateUser');
-        Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-        Route::post('/users/{user}/promote', [UserController::class, 'promoteToAdmin'])->name('users.promote');
-    });
 
+        Route::prefix('users')->name('users.')->group(function () {
+            Route::get('/', [UserController::class, 'index'])->name('index');
+            Route::get('/{user}', [UserController::class, 'edit'])->name('edit');
+            Route::put('/{user}', [UserController::class, 'updateUser'])->name('update');
+            Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
+            Route::post('/{user}/promote', [UserController::class, 'promoteToAdmin'])->name('promote');
+        });
+    });
 });

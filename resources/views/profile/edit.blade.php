@@ -14,7 +14,7 @@
             </div>
         @endif
 
-        <form action="{{ route('users.updateUser', $user) }}" method="POST">
+        <form action="{{ route('admin.users.update', $user) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -39,7 +39,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Update User</button>
-            <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancel</a>
+            <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 @endsection
